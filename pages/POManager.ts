@@ -3,6 +3,7 @@ import { LoginPage } from "./LoginPage";
 import { Page } from "@playwright/test";
 import { ProductPage } from "./ProductsPage";
 import { DetailProductPage } from "./DetailProductPage";
+import { CartPage } from "./CartPage";
 
 export class POManager{
 
@@ -11,6 +12,7 @@ export class POManager{
     homePage : HomePage;
     products : ProductPage;
     detailProduct : DetailProductPage;
+    cartPage : CartPage;
 
     constructor(page:Page){
         this.page = page;
@@ -18,6 +20,7 @@ export class POManager{
         this.homePage = new HomePage(this.page);
         this.products = new ProductPage(this.page);
         this.detailProduct = new DetailProductPage(this.page);
+        this.cartPage = new CartPage(this.page);
     }
 
     getLoginPage(){
@@ -34,6 +37,10 @@ export class POManager{
 
     getDetailProduct(){
         return this.detailProduct;
+    }
+
+    getCartPage(){
+        return this.cartPage;
     }
 }
 module.exports = {POManager};

@@ -27,5 +27,19 @@ test.describe('products', () =>{
         const detailProduct = await poManager.getDetailProduct();
         await detailProduct.validateDetailProduct('Sauce Labs Bike Light', '$9.99');
     });
+
+    test.only('Add one product to cart', async ({page}) =>{
+        const poManager = new POManager(page);
+        const loginPage = await poManager.getLoginPage();
+        await loginPage.goTo();
+        await loginPage.validLogin("standard_user", "secret_sauce");
+        const homePage = await poManager.getHomePage();
+        await homePage.validHeaderText();
+        const productPage = await poManager.getProductPage();
+        await productPage.addOneProductToCart('Sauce Labs Fleece Jacket');
+        await productPage.selectBtnCart();
+        const cartPage = await poManager.getCartPage();
+        await cartPage.validateProduct("Sauce Labs Fleece Jacket","$49.99");
+    })
     
 });
