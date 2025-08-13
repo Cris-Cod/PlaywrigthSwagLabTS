@@ -28,7 +28,7 @@ test.describe('products', () =>{
         await detailProduct.validateDetailProduct('Sauce Labs Bike Light', '$9.99');
     });
 
-    test.only('Add one product to cart', async ({page}) =>{
+    test('Add one product to cart', async ({page}) =>{
         const poManager = new POManager(page);
         const loginPage = await poManager.getLoginPage();
         await loginPage.goTo();
@@ -40,6 +40,29 @@ test.describe('products', () =>{
         await productPage.selectBtnCart();
         const cartPage = await poManager.getCartPage();
         await cartPage.validateProduct("Sauce Labs Fleece Jacket","$49.99");
+    })
+
+    test.only('buy one product', async ({page}) =>{
+        const poManager = new POManager(page);
+        const loginPage = await poManager.getLoginPage();
+        await loginPage.goTo();
+        await loginPage.validLogin("standard_user", "secret_sauce");
+        const homePage = await poManager.getHomePage();
+        await homePage.validHeaderText();
+        const productPage = await poManager.getProductPage();
+        await productPage.addOneProductToCart('Sauce Labs Bike Light');
+        await productPage.selectBtnCart();
+        const cartPage = await poManager.getCartPage();
+        await cartPage.validateProduct("Sauce Labs Bike Light","$9.99");
+        await cartPage.clickBtnCheckout();
+        const checkoutInfo = await poManager.getCheckoutPage();
+        await checkoutInfo.fillInformatio("pruebaN","pruebaL","0101");
+        const checkoutOver = await poManager.getCheckoutOverviewPage();
+        await checkoutOver.validateProductInfo("Sauce Labs Bike Light", "$9.99", "SauceCard #31337", "Free Pony Express Delivery!", "$0.80", "$10.79");
+        const checkoutComplete = await poManager.getCheckoutComplete();
+        checkoutComplete.validateMessageThanYou("Thank you for your order!");
+        checkoutComplete.clickBtnBackHome();
+        await homePage.validHeaderText();
     })
     
 });

@@ -24,6 +24,8 @@ export class CheckoutOverviewPage{
     }
 
     async validateProductInfo(nameP : string, priceP : string, payInfo : string, shippingInfo : string, tax :string, total : string){
+        const taxes = (await this.txtTax.textContent())?.trim().split(" ") ?? [];
+        const totalP = (await this.txtTotal.textContent())?.trim().split(" ") ?? [];
         await Promise.all([
             expect(this.txtNameProduct).toBeVisible(),
             expect(this.txtNameProduct).toHaveText(nameP),
@@ -34,9 +36,9 @@ export class CheckoutOverviewPage{
             expect(this.txtShippingInfo).toBeVisible(),
             expect(this.txtShippingInfo).toHaveText(shippingInfo),
             expect(this.txtTax).toBeVisible(),
-            expect(this.txtTax).toHaveText(tax),
+            expect(taxes.at(-1)).toBe(tax),
             expect(this.txtTotal).toBeVisible(),
-            expect(this.txtTotal).toHaveText(total),
+            expect(totalP.at(-1)).toBe(total),
 
         ]);
 
@@ -44,3 +46,4 @@ export class CheckoutOverviewPage{
         
     }
 }
+module.exports = {CheckoutOverviewPage};

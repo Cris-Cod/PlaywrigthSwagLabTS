@@ -4,6 +4,9 @@ import { Page } from "@playwright/test";
 import { ProductPage } from "./ProductsPage";
 import { DetailProductPage } from "./DetailProductPage";
 import { CartPage } from "./CartPage";
+import { CheckoutPage } from "./CheckoutPage";
+import { CheckoutOverviewPage } from "./CheckoutOverviewPage";
+import { CheckoutComplete } from "./CheckoutComplete";
 
 export class POManager{
 
@@ -13,6 +16,10 @@ export class POManager{
     products : ProductPage;
     detailProduct : DetailProductPage;
     cartPage : CartPage;
+    checkoutPage : CheckoutPage;
+    checkoutOverPage : CheckoutOverviewPage;
+    checkoutCompletePage : CheckoutComplete;
+
 
     constructor(page:Page){
         this.page = page;
@@ -21,6 +28,9 @@ export class POManager{
         this.products = new ProductPage(this.page);
         this.detailProduct = new DetailProductPage(this.page);
         this.cartPage = new CartPage(this.page);
+        this.checkoutPage = new CheckoutPage(this.page);
+        this.checkoutOverPage = new CheckoutOverviewPage(this.page);
+        this.checkoutCompletePage = new CheckoutComplete(this.page);
     }
 
     getLoginPage(){
@@ -41,6 +51,18 @@ export class POManager{
 
     getCartPage(){
         return this.cartPage;
+    }
+
+    getCheckoutPage(){
+        return this.checkoutPage;
+    }
+
+    getCheckoutOverviewPage(){
+        return this.checkoutOverPage;
+    }
+
+    getCheckoutComplete(){
+        return this.checkoutCompletePage;
     }
 }
 module.exports = {POManager};

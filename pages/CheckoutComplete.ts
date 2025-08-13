@@ -26,3 +26,4 @@ export class CheckoutComplete{
         await this.btnBackHome.click();
     }
 }
+module.exports = {CheckoutComplete};

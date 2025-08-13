@@ -15,7 +15,7 @@ export class CartPage{
         this.textPrice = page.locator('.inventory_item_price');
         this.btnRemove = page.getByTestId('remove-sauce-labs-backpack');
         this.btnContinueShopping = page.getByTestId('continue-shopping');
-        this.btnCheckout = page.locator('checkout');
+        this.btnCheckout = page.locator('#checkout');
     }
 
 
@@ -24,4 +24,9 @@ export class CartPage{
         expect(this.nameProduct).toHaveText(name);
         expect(this.textPrice).toContainText(price);
     }
+
+    async clickBtnCheckout(){
+        await this.btnCheckout.click();
+    }
 }
+module.exports = {CartPage};
